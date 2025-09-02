@@ -1,0 +1,78 @@
+# Copyright 2025 Spinornet authors.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import jax
+import os
+import itertools
+from absl import app
+from ml_collections.config_flags import config_flags
+from absl import flags
+
+FLAGS = flags.FLAGS
+
+config_flags.DEFINE_config_file('config', None, 'Path to config file.')
+
+def main(_):
+  from spinornet import process
+  from spinornet.configs.h3 import get_config
+  from spinornet import base_config
+  cfg = base_config.default()
+  cfg.use_x64=False
+  if cfg.use_x64:
+    jax.config.update("jax_enable_x64", True)
+
+  cfg.update(get_config('2.5'))
+  cfg.batch_size = 32000
+  cfg.optim.iterations = 30001
+  cfg.log.save_frequency = 1000
+  cfg.optim.optimizer = 'kfac'
+  cfg.pretrain.iterations = 0
+  cfg.mcmc.init_width=0.5
+  cfg.mcmc.adapt_frequency=60000
+  cfg.mcmc.pos_type='langevin'
+  cfg.mcmc.spin_type='cont'
+  cfg.init_spin_type = 'half'
+  cfg.mcmc.init_spin_width=0.5
+  cfg.mcmc.steps=10
+  cfg.mcmc.burn_in=100
+  cfg.optim.lap_method='folx'
+  cfg.optim.max_vmap_batch_size=32000
+
+  cfg.network.network_type = 'spinornet_single'
+
+  units = [2,4,6,8]
+
+  for i, wftype in itertools.product(range(4),
+                                            ['coll','noncoll', 'pnoncoll']):
+        if wftype == 'coll':
+            cfg.network.hf_method = 'HFOrbitalcol'
+            cfg.mcmc.spin_sample = False
+        elif wftype == 'noncoll':
+            cfg.network.hf_method = 'HFOrbital'
+            cfg.mcmc.spin_sample = True
+        elif wftype == 'pnoncoll':
+            cfg.network.hf_method = 'HFOrbital'
+            cfg.mcmc.spin_sample = False
+
+        cfg.network.spinornet_single.hidden_size_single = units[i]
+        cfg.log.save_path = f'h3_25_spinor_single_{wftype}_{units[i]}unit'
+
+        #cfg.log.restore_path = f'3_data_code/h3/{wftype}-{units[i]}/'
+        #cfg.log.restore_epoch = -1
+
+        process.process(cfg)
+
+
+if __name__ == '__main__':
+    app.run(main)

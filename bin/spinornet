@@ -1,0 +1,18 @@
+from absl import app
+from spinornet import process
+from ml_collections.config_flags import config_flags
+from absl import flags
+from jax.config import config as jax_config
+
+FLAGS = flags.FLAGS
+
+config_flags.DEFINE_config_file('config', None, 'Path to config file.')
+
+def main(_):
+  cfg = FLAGS.config
+  if cfg.use_x64:
+    jax_config.update("jax_enable_x64", True)
+  process.process(cfg)
+
+if __name__ == '__main__':
+  app.run(main)
