@@ -69,7 +69,7 @@ For testing/analysis, can open a vscode remote with singularity. Suggest to foll
 
 # Cite
 
-This repository contains code for the paper [http://arxiv.org/abs/2506.00155v2](http://arxiv.org/abs/2506.00155v2).
+This repository contains code for the paper [http://arxiv.org/abs/2506.00155](http://arxiv.org/abs/2506.00155).
 If you find this code useful, please cite the paper:
 
 ```
@@ -81,10 +81,10 @@ If you find this code useful, please cite the paper:
                   Network Wave Functions},
   journal =	 {CoRR},
   year =	 2025,
-  url =		 {http://arxiv.org/abs/2506.00155v2},
+  url =		 {http://arxiv.org/abs/2506.00155},
   abstract =	 {},
   archivePrefix ={arXiv},
-  eprint =	 {2506.00155v2},
+  eprint =	 {2506.00155},
   primaryClass = {cond-mat.str-el},
 }
 
