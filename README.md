@@ -69,23 +69,23 @@ For testing/analysis, can open a vscode remote with singularity. Suggest to foll
 
 # Cite
 
-This repository contains code for the paper [http://arxiv.org/abs/2506.00155](http://arxiv.org/abs/2506.00155).
+This repository contains code for the paper [https://pubs.acs.org/doi/abs/10.1021/acs.jctc.5c01243](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.5c01243).
 If you find this code useful, please cite the paper:
 
 ```
 @article{zhan-2025-expres-deter,
-  author =	 {Zhan, Ni and Wheeler, William A. and Goldshlager,
-                  Gil and Ertekin, Elif and Adams, Ryan P. and Wagner,
-                  Lucas K.},
+  author =	 {Ni Zhan and William A. Wheeler and Gil Goldshlager
+                  and Elif Ertekin and Ryan P. Adams and Lucas
+                  K. Wagner},
   title =	 {Expressivity of Determinantal Ansatzes for Neural
                   Network Wave Functions},
-  journal =	 {CoRR},
+  journal =	 {Journal of Chemical Theory and Computation},
+  volume =	 21,
+  number =	 19,
+  pages =	 {9612-9619},
   year =	 2025,
-  url =		 {http://arxiv.org/abs/2506.00155},
-  abstract =	 {},
-  archivePrefix ={arXiv},
-  eprint =	 {2506.00155},
-  primaryClass = {cond-mat.str-el},
+  doi =		 {10.1021/acs.jctc.5c01243},
+  url =		 {http://dx.doi.org/10.1021/acs.jctc.5c01243},
 }
 
 ```
